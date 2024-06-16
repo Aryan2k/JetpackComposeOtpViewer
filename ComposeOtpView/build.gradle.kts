@@ -43,7 +43,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 groupId = "com.github.aryan2k"
                 artifactId = "ComposeOtpViewer"
-                version = "1.0.2"
+                version = "1.0.3"
                 from(components["release"])
             }
         }
