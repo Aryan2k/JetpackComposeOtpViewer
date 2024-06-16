@@ -14,8 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -23,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aryanm468.composeotpview.OtpView
+import com.aryanm468.composeotpview.OtpViewUtils
 import com.aryanm468.composeotpviewer.ui.theme.ComposeOtpViewerTheme
 
 class MainActivity : ComponentActivity() {
@@ -41,16 +44,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun OtpSection(innerPadding: PaddingValues) {
-    val enteredOtp = remember {
-        mutableStateListOf(
-            '2',
-            Char.MIN_VALUE,
-            Char.MIN_VALUE,
-            Char.MIN_VALUE,
-            Char.MIN_VALUE,
-            '3'
-        )
-    }
+    var enteredOtp by remember { mutableStateOf(OtpViewUtils.getFormattedInitialOtp(6)) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -65,9 +59,6 @@ fun OtpSection(innerPadding: PaddingValues) {
             fontWeight = FontWeight.Medium
         )
         Spacer(modifier = Modifier.height(24.dp))
-        OtpView(enteredOtp = enteredOtp) {
-            enteredOtp.clear()
-            enteredOtp.addAll(it)
-        }
+        OtpView(enteredOtp = enteredOtp) { enteredOtp = it }
     }
 }

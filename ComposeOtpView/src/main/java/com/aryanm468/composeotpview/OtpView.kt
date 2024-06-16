@@ -39,7 +39,7 @@ import androidx.core.text.isDigitsOnly
 @Composable
 fun OtpView(
     otpCharCount: Int = 6,
-    enteredOtp: List<Char>,
+    enteredOtp: String,
     boxShape: Shape = RoundedCornerShape(16.dp),
     textStyle: TextStyle = LocalTextStyle.current.copy(
         textAlign = TextAlign.Center,
@@ -48,9 +48,9 @@ fun OtpView(
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     focusedBorderThickness: Dp = OutlinedTextFieldDefaults.FocusedBorderThickness,
     unfocusedBorderThickness: Dp = OutlinedTextFieldDefaults.UnfocusedBorderThickness,
-    onOtpChanged: (List<Char>) -> Unit
+    onOtpChanged: (String) -> Unit
 ) {
-    if (enteredOtp.size != otpCharCount) {
+    if (enteredOtp.length != otpCharCount) {
         throw IllegalArgumentException("Entered otp length and otp char count do not match")
     }
     val focusRequesterList = List(otpCharCount) { FocusRequester() }
@@ -75,7 +75,7 @@ fun OtpView(
                     } else if (valueToFill == Char.MIN_VALUE) {
                         wasValueEntered = true
                     }
-                    onOtpChanged(updatedOtpList)
+                    onOtpChanged(updatedOtpList.toString())
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
