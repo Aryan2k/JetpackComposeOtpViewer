@@ -1,7 +1,6 @@
 package com.aryanm468.composeotpviewer
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -15,6 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -40,6 +41,16 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun OtpSection(innerPadding: PaddingValues) {
+    val enteredOtp = remember {
+        mutableStateListOf(
+            '2',
+            Char.MIN_VALUE,
+            Char.MIN_VALUE,
+            Char.MIN_VALUE,
+            Char.MIN_VALUE,
+            '3'
+        )
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,6 +65,9 @@ fun OtpSection(innerPadding: PaddingValues) {
             fontWeight = FontWeight.Medium
         )
         Spacer(modifier = Modifier.height(24.dp))
-        OtpView { Log.i("otp", it) }
+        OtpView(enteredOtp = enteredOtp) {
+            enteredOtp.clear()
+            enteredOtp.addAll(it)
+        }
     }
 }

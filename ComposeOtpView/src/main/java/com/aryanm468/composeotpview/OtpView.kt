@@ -39,6 +39,7 @@ import androidx.core.text.isDigitsOnly
 @Composable
 fun OtpView(
     otpCharCount: Int = 6,
+    enteredOtp: List<Char>,
     boxShape: Shape = RoundedCornerShape(16.dp),
     textStyle: TextStyle = LocalTextStyle.current.copy(
         textAlign = TextAlign.Center,
@@ -47,11 +48,13 @@ fun OtpView(
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     focusedBorderThickness: Dp = OutlinedTextFieldDefaults.FocusedBorderThickness,
     unfocusedBorderThickness: Dp = OutlinedTextFieldDefaults.UnfocusedBorderThickness,
-    onOtpChanged: (String) -> Unit
+    onOtpChanged: (List<Char>) -> Unit
 ) {
+    if (enteredOtp.size != otpCharCount) {
+        throw IllegalArgumentException("Entered otp length and otp char count do not match")
+    }
     val focusRequesterList = List(otpCharCount) { FocusRequester() }
     var wasValueEntered by remember { mutableStateOf(false) }
-    val otpState = remember { mutableStateOf(" ".repeat(otpCharCount)) }
 
     Row(
         modifier = Modifier
@@ -59,31 +62,20 @@ fun OtpView(
             .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.Center
     ) {
-        repeat(otpCharCount) { index ->
-            val enteredValue = otpState.value[index].toString()
+        enteredOtp.forEachIndexed { index, otpCharacter ->
             OutlinedOtpBox(
-                value = enteredValue.ifBlank { "" },
+                value = if (otpCharacter != Char.MIN_VALUE) otpCharacter.toString() else "",
                 onValueChange = { updatedValue ->
                     val valueToFill =
-                        if (updatedValue.isDigitsOnly() && updatedValue.isNotBlank()) updatedValue[0].toString() else " "
-                    val updatedOTP = if (index == 0) {
-                        "$valueToFill${otpState.value.substring(1)}"
-                    } else {
-                        val currentOtp = otpState.value
-                        "${
-                            currentOtp.substring(
-                                0,
-                                index
-                            )
-                        }$valueToFill${currentOtp.substring(index + 1)}"
-                    }
-                    otpState.value = updatedOTP
-                    onOtpChanged(otpState.value)
-                    if (valueToFill.isDigitsOnly() && index + 1 != otpCharCount) {
+                        if (updatedValue.isDigitsOnly() && updatedValue.isNotBlank()) updatedValue[0] else Char.MIN_VALUE
+                    val updatedOtpList = enteredOtp.toMutableList()
+                    updatedOtpList[index] = valueToFill
+                    if (valueToFill.isDigit() && index + 1 != otpCharCount) {
                         focusRequesterList[index + 1].requestFocus()
-                    } else if (valueToFill.isBlank()) {
+                    } else if (valueToFill == Char.MIN_VALUE) {
                         wasValueEntered = true
                     }
+                    onOtpChanged(updatedOtpList)
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
