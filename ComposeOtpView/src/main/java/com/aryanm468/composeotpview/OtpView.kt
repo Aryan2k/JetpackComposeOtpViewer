@@ -38,8 +38,8 @@ import androidx.core.text.isDigitsOnly
 
 @Composable
 fun OtpView(
-    otpCharCount: Int = 6,
     enteredOtp: String,
+    otpCharCount: Int,
     boxShape: Shape = RoundedCornerShape(16.dp),
     textStyle: TextStyle = LocalTextStyle.current.copy(
         textAlign = TextAlign.Center,
@@ -68,14 +68,15 @@ fun OtpView(
                 onValueChange = { updatedValue ->
                     val valueToFill =
                         if (updatedValue.isDigitsOnly() && updatedValue.isNotBlank()) updatedValue[0] else Char.MIN_VALUE
-                    val updatedOtpList = enteredOtp.toMutableList()
-                    updatedOtpList[index] = valueToFill
+                    val otpStringBuilder = StringBuilder(enteredOtp)
+                    otpStringBuilder.setCharAt(index, valueToFill)
                     if (valueToFill.isDigit() && index + 1 != otpCharCount) {
+                        focusRequesterList[index].freeFocus()
                         focusRequesterList[index + 1].requestFocus()
                     } else if (valueToFill == Char.MIN_VALUE) {
                         wasValueEntered = true
                     }
-                    onOtpChanged(updatedOtpList.toString())
+                    onOtpChanged(otpStringBuilder.toString())
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
@@ -91,6 +92,7 @@ fun OtpView(
                             if (wasValueEntered) {
                                 wasValueEntered = false
                             } else {
+                                focusRequesterList[index].freeFocus()
                                 if (index != 0) {
                                     focusRequesterList[index - 1].requestFocus()
                                 }

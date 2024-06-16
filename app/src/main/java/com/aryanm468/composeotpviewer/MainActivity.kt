@@ -59,6 +59,6 @@ fun OtpSection(innerPadding: PaddingValues) {
             fontWeight = FontWeight.Medium
         )
         Spacer(modifier = Modifier.height(24.dp))
-        OtpView(enteredOtp = enteredOtp) { enteredOtp = it }
+        OtpView(otpCharCount = 6, enteredOtp = enteredOtp) { enteredOtp = it }
     }
 }
