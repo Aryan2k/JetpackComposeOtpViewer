@@ -37,14 +37,13 @@ android {
     }
 }
 
-publishing {
-    publications {
-        register<MavenPublication>("release") {
-            groupId = "com.github.aryan2k"
-            artifactId = "ComposeOtpViewer"
-            version = "1.0.1"
-
-            afterEvaluate {
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                groupId = "com.github.aryan2k"
+                artifactId = "ComposeOtpViewer"
+                version = "1.0.2"
                 from(components["release"])
             }
         }

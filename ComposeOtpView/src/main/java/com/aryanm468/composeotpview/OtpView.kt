@@ -39,7 +39,7 @@ import androidx.core.text.isDigitsOnly
 @Composable
 fun OtpView(
     otpCharCount: Int = 6,
-    shape: Shape = RoundedCornerShape(16.dp),
+    boxShape: Shape = RoundedCornerShape(16.dp),
     textStyle: TextStyle = LocalTextStyle.current.copy(
         textAlign = TextAlign.Center,
         fontWeight = FontWeight.SemiBold
@@ -108,7 +108,7 @@ fun OtpView(
                             false
                         }
                     },
-                shape = shape,
+                shape = boxShape,
                 colors = colors,
                 focusedBorderThickness = focusedBorderThickness,
                 unfocusedBorderThickness = unfocusedBorderThickness
