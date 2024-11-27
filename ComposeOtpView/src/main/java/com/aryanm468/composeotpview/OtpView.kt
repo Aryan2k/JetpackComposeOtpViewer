@@ -1,11 +1,13 @@
 package com.aryanm468.composeotpview
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -45,6 +47,8 @@ fun OtpView(
         textAlign = TextAlign.Center,
         fontWeight = FontWeight.SemiBold
     ),
+    spacerWidth: Dp = 8.dp,
+    containerSize: Dp? = null,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     focusedBorderThickness: Dp = OutlinedTextFieldDefaults.FocusedBorderThickness,
     unfocusedBorderThickness: Dp = OutlinedTextFieldDefaults.UnfocusedBorderThickness,
@@ -66,17 +70,23 @@ fun OtpView(
             OutlinedOtpBox(
                 value = if (otpCharacter != Char.MIN_VALUE) otpCharacter.toString() else "",
                 onValueChange = { updatedValue ->
-                    val valueToFill =
-                        if (updatedValue.isDigitsOnly() && updatedValue.isNotBlank()) updatedValue[0] else Char.MIN_VALUE
-                    val otpStringBuilder = StringBuilder(enteredOtp)
-                    otpStringBuilder.setCharAt(index, valueToFill)
-                    if (valueToFill.isDigit() && index + 1 != otpCharCount) {
-                        focusRequesterList[index].freeFocus()
-                        focusRequesterList[index + 1].requestFocus()
-                    } else if (valueToFill == Char.MIN_VALUE) {
+                    if (updatedValue.length == otpCharCount && updatedValue.isDigitsOnly()) {
+                        onOtpChanged(updatedValue)
+                        focusRequesterList[otpCharCount - 1].requestFocus()
                         wasValueEntered = true
+                    } else {
+                        val valueToFill =
+                            if (updatedValue.isDigitsOnly() && updatedValue.isNotBlank()) updatedValue[0] else Char.MIN_VALUE
+                        val otpStringBuilder = StringBuilder(enteredOtp)
+                        otpStringBuilder.setCharAt(index, valueToFill)
+                        if (valueToFill.isDigit() && index + 1 != otpCharCount) {
+                            focusRequesterList[index].freeFocus()
+                            focusRequesterList[index + 1].requestFocus()
+                        } else if (valueToFill == Char.MIN_VALUE) {
+                            wasValueEntered = true
+                        }
+                        onOtpChanged(otpStringBuilder.toString())
                     }
-                    onOtpChanged(otpStringBuilder.toString())
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
@@ -84,8 +94,12 @@ fun OtpView(
                 ),
                 textStyle = textStyle,
                 modifier = Modifier
-                    .weight(1f)
-                    .aspectRatio(1f)
+                    .let {
+                        if (containerSize != null) it.size(containerSize)
+                        else it
+                            .weight(1f)
+                            .aspectRatio(1f)
+                    }
                     .focusRequester(focusRequesterList[index])
                     .onKeyEvent { event ->
                         if (event.type == KeyEventType.KeyUp && event.key == Key.Backspace) {
@@ -108,13 +122,17 @@ fun OtpView(
                 unfocusedBorderThickness = unfocusedBorderThickness
             )
             if (index + 1 != otpCharCount) {
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(spacerWidth))
             }
         }
     }
     LaunchedEffect(key1 = true) {
         if (focusRequesterList.isNotEmpty()) {
-            focusRequesterList[0].requestFocus()
+            try {
+                focusRequesterList[0].requestFocus()
+            } catch (e: IllegalStateException) {
+                Log.e("FocusError", "FocusRequester is not initialized: ${e.message}")
+            }
         }
     }
 }

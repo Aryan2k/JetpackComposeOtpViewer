@@ -68,7 +68,9 @@ fun OutlinedOtpBox(
         BasicTextField(
             value = value,
             modifier = if (label != null) {
-                modifier.semantics(mergeDescendants = true) {}.padding(0.dp)
+                modifier
+                    .semantics(mergeDescendants = true) {}
+                    .padding(0.dp)
             } else {
                 modifier.padding(0.dp)
             },
