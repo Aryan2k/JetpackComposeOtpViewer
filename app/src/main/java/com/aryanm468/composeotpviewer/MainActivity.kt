@@ -20,12 +20,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.aryanm468.composeotpview.OtpView
-import com.aryanm468.composeotpview.OtpViewUtils
+import com.aryanm468.composeotpview.OtpInputField
 import com.aryanm468.composeotpviewer.ui.theme.ComposeOtpViewerTheme
 
 class MainActivity : ComponentActivity() {
@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun OtpSection(innerPadding: PaddingValues) {
-    var enteredOtp by remember { mutableStateOf(OtpViewUtils.getFormattedInitialOtp(6)) }
+    var enteredOtp by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -55,10 +55,17 @@ fun OtpSection(innerPadding: PaddingValues) {
         Text(
             text = "Enter One Time Password",
             fontSize = 24.sp,
+            color = Color.Red,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Medium
         )
         Spacer(modifier = Modifier.height(24.dp))
-        OtpView(otpCharCount = 6, enteredOtp = enteredOtp) { enteredOtp = it }
+        OtpInputField(
+            modifier = Modifier.padding(32.dp),
+            otpLength = 6,
+            enteredOtp = enteredOtp
+        ) {
+            enteredOtp = it
+        }
     }
 }
