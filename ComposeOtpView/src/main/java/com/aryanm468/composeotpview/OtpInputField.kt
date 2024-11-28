@@ -67,7 +67,7 @@ fun OtpInputField(
                 onValueChange = { updatedValue ->
                     val clipboardText = (clipboardManager.getText()?.text ?: "")
                     val isClipboardInput =
-                        clipboardText.isNotEmpty() && updatedValue == clipboardText
+                        clipboardText.trim().isNotEmpty() && updatedValue == clipboardText
                     if (isClipboardInput) {
                         updatedValue.forEachIndexed { index, character ->
                             otpArray[index] = character
