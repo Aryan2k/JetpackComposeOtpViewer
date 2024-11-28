@@ -16,7 +16,7 @@ JetpackComposeOtpViewer is a modern, flexible, and customizable OTP (One-Time Pa
 - Jetpack Compose-based: Built using Jetpack Compose, leveraging the latest Android UI toolkit for a declarative UI design.
 - Auto-Complete & Auto-Focus: Automatically moves focus to the next input field as the user types, with optional auto-submit when the OTP is complete.
 - Customizable: Easily customize the appearance (font size, color, shape) and behavior of the OTP input fields to match your app’s design.
-- Smooth User Experience: Supports various input types, including digits, and provides a smooth, intuitive experience for entering OTPs.
+- Smooth User Experience: Provides a smooth, intuitive experience for entering OTPs.
 - Validation Ready: Built with validation in mind, allowing you to integrate this component seamlessly into your OTP authentication flow.
 
 ## Libraries used
@@ -31,5 +31,48 @@ JetpackComposeOtpViewer is a modern, flexible, and customizable OTP (One-Time Pa
   
 ## Installation
 
-Please use this link to download the apk: https://drive.google.com/file/d/1A0hbmcsr2Tez3Brls0eVgT-KlShEbkB3/view?usp=sharing
+Step 1. Add the JitPack repository to your build file
+- Add it in your root build.gradle at the end of repositories:
+
+  ```
+  dependencyResolutionManagement {
+		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+		repositories {
+			mavenCentral()
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+Step 2. Add the dependency
+
+```
+dependencies {
+	        implementation 'com.github.Aryan2k:JetpackComposeOtpViewer:1.0.5'
+	}
+```
+
+**Make sure to check the latest version on the releases page.**
+
+## Usage
+
+- Here’s a simple example of how to use the OtpViewer component in your Jetpack Compose layout:
+  
+```
+import com.aryanm468.composeotpviewer
+
+@Composable
+fun OtpInputScreen() {
+
+    var enteredOtp by remember { mutableStateOf("") }
+
+    OtpInputField(
+        modifier = Modifier.padding(32.dp),
+        enteredOtp = enteredOtp,
+        otpLength = 6, // Customize the OTP length 
+        onOtpChanged = {
+            enteredOtp = it
+        }
+    )
+
+}
 
