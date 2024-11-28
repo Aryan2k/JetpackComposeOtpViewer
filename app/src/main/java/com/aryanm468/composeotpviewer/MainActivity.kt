@@ -55,11 +55,9 @@ fun OtpSection(innerPadding: PaddingValues) {
         Text(
             text = "Enter One Time Password",
             fontSize = 24.sp,
-            color = Color.Red,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Medium
         )
-        Spacer(modifier = Modifier.height(24.dp))
         OtpInputField(
             modifier = Modifier.padding(32.dp),
             otpLength = 6,
