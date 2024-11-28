@@ -15,6 +15,7 @@ JetpackComposeOtpViewer is a modern, flexible, and customizable OTP (One-Time Pa
 
 - Jetpack Compose-based: Built using Jetpack Compose, leveraging the latest Android UI toolkit for a declarative UI design.
 - Auto-Complete & Auto-Focus: Automatically moves focus to the next input field as the user types, with optional auto-submit when the OTP is complete.
+- Clipboard OTP Pasting: Users can easily paste OTP codes directly from the clipboard, enhancing the user experience for those who receive OTPs via SMS or email.
 - Customizable: Easily customize the appearance (font size, color, shape) and behavior of the OTP input fields to match your app’s design.
 - Smooth User Experience: Provides a smooth, intuitive experience for entering OTPs.
 - Validation Ready: Built with validation in mind, allowing you to integrate this component seamlessly into your OTP authentication flow.
@@ -47,7 +48,7 @@ Step 2. Add the dependency
 
 ```
 dependencies {
-	        implementation 'com.github.Aryan2k:JetpackComposeOtpViewer:1.0.5'
+	        implementation 'com.github.Aryan2k:JetpackComposeOtpViewer:1.0.6'
 	}
 ```
 
@@ -68,7 +69,7 @@ fun OtpInputScreen() {
     OtpInputField(
         modifier = Modifier.padding(32.dp),
         enteredOtp = enteredOtp,
-        otpLength = 6, // Customize the OTP length 
+        otpLength = 6,  // Customize the OTP length 
         onOtpChanged = {
             enteredOtp = it
         }
