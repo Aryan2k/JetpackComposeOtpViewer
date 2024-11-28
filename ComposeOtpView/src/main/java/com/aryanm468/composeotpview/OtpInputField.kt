@@ -91,7 +91,6 @@ fun OtpInputField(
                         isBackHandled = true
                     }
                 },
-
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
