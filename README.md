@@ -1,8 +1,9 @@
 # JetpackComposeOtpViewer
 
 JetpackComposeOtpViewer is a modern, flexible, and customizable OTP (One-Time Password) input UI component built with Jetpack Compose for Android. This library simplifies the process of building secure and user-friendly OTP input screens, providing features like auto-focus, automatic digit transition, and customizable styles—all while following best practices for Android UI development.
+
 ![Platform](https://img.shields.io/badge/Platform-Android-lightseagreen) &nbsp;
-![API Level](https://img.shields.io/badge/API-24%2B-steelblue) &nbsp;
+![API Level](https://img.shields.io/badge/API-21%2B-steelblue) &nbsp;
 ![Language](https://img.shields.io/badge/Language-Kotlin-orange)
 
 ## Screenshots
@@ -23,7 +24,11 @@ JetpackComposeOtpViewer is a modern, flexible, and customizable OTP (One-Time Pa
 - Jetpack Compose:
   - A modern toolkit for building native Android UIs with a declarative approach.
   - Simplifies and accelerates UI development.
-
+- Kotlin Standard Library
+  - Essential Kotlin features and functions, including coroutines, collection operations, and more.
+- Material Components for Jetpack Compose
+  - Material design components and theming for Jetpack Compose, ensuring a consistent UI design across Android apps.
+  
 ## Installation
 
 Please use this link to download the apk: https://drive.google.com/file/d/1A0hbmcsr2Tez3Brls0eVgT-KlShEbkB3/view?usp=sharing
