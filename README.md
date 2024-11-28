@@ -8,8 +8,7 @@ JetpackComposeOtpViewer is a modern, flexible, and customizable OTP (One-Time Pa
 
 ## Screenshots
 
-<img src="https://github.com/Aryan2k/PokeDiary/blob/main/PokeDiarySplash.png" height = "720" width = "320"/>        <img src="https://github.com/Aryan2k/PokeDiary/blob/main/PokeDiaryLoader.png" height = "720" width = "320"/>  
-<img src="https://github.com/Aryan2k/PokeDiary/blob/main/PokeDiaryList.png" height = "720" width = "320"/>        <img src="https://github.com/Aryan2k/PokeDiary/blob/main/PokeDiaryDetails.png" height = "720" width = "320"/>
+<img src="OtpInputField.png" height = "720" width = "320"/>   <img src="OtpInputField2.png" height = "720" width = "320"/>  
 
 ## Key Features
 
